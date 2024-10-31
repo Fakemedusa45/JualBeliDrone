@@ -19,12 +19,12 @@ if (isset($_POST["submit"])) {
         if (password_verify($password, $user['password'])) {
             // Cek role pengguna
             $_SESSION['login'] = true; // tambahkan session jika berhasil login
-            if ($user['role'] === 'Admin') {
+            if ($user['role'] === 'admin') {
                 $_SESSION['role'] = 'admin'; // session untuk admin
                 echo "
                 <script>
                 alert('Login berhasil! Selamat datang Admin.');
-                document.location.href = 'CRUDAdmin.php';
+                document.location.href = 'index.php';
                 </script>
                 ";
             } else {

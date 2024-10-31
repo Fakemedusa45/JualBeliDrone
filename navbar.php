@@ -17,11 +17,21 @@
             </li>
 
             <?php
-            if (isset($_SESSION['email']))
-            echo 
-            "<li class='navbar-item'>
-              <a href= 'keranjang.php'>BUY</a>
-            </li>"
+            if (isset($_SESSION['email'])){
+              echo 
+              "<li class='navbar-item'>
+                <a href= 'keranjang.php'>BUY</a>
+              </li>";
+            }
+            ?>
+            
+            <?php
+            if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+              echo "
+              <li class='navbar-item'>
+                <a href='admin.php'>Admin</a>
+              </li>";
+            }
             ?>
 
             <li class="navbar-item">

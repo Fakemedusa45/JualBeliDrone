@@ -248,7 +248,6 @@ body{
 
 .dark-mode .navbar-section {
   background-color: #000000;
-  box-shadow: 1px 2px 16px 0px #ffffff;
   color: #fff;
 }
 
@@ -264,6 +263,7 @@ body{
 .dark-mode .drone-container {
   background-color: #444;
   color: #fff;
+  box-shadow: 1px 2px 16px 0px #ffffff;
 }
 
 .dark-mode .drone-container a {

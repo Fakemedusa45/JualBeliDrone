@@ -71,7 +71,7 @@ table.darkTable {
 }
 
 table.darkTable td, table.darkTable th {
-  border: 2px solid #4A4A4A;
+  border: 2px solid #000000;
   padding: 3px 2px;
 }
 
@@ -98,28 +98,21 @@ table.darkTable tr:nth-child(even) {
 
 table.darkTable thead {
   background: #4ba3e3;
-  border-bottom: 2px solid #000000;
 }
 
 .dark-mode table.darkTable thead {
   background:#000000 ;
-  border-bottom: 2px solid #ffffff;
 }
 
 table.darkTable thead th {
   font-size: 15px;
   font-weight: bold;
-  color: #ffffff;
+  color: #000000;
   text-align: center;
-  border-left: 1px solid #4A4A4A;
 }
 
-.dark-mode table.darkTable thead th{
-  border-left: 1px solid #dbdbdb;
-}
-
-table.darkTable thead th:first-child {
-  border-left: none;
+.dark-mode table.darkTable thead th {
+  color: #FFFFFF;
 }
 
 table.darkTable tfoot td {
