@@ -58,6 +58,14 @@
           </div>
 
           <div class="login">
-            <a href=<?php echo isset($_SESSION['email']) == false ? 'login.php' : 'logout.php'?>><?php echo isset($_SESSION['email']) == false ? 'LOGIN' : 'LOGOUT' ?></a>
-          </div>
+            <?php 
+            if (!isset($_SESSION['role'])){
+              echo
+              '<a href="login.php">LOGIN</a>';
+            } else{
+              echo
+              '<a href="logout.php" class="logout">LOGOUT</a>';
+            }
+            ?>
+            </div>
     </nav>

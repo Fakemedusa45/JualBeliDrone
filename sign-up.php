@@ -8,6 +8,20 @@ if(isset($_POST["submit"])) {
     $password_confirm = trim($_POST["password_confirm"]);
     $role = "user";
 
+    // Cek apakah username sudah digunakan
+    $checkQuery = "SELECT * FROM user WHERE email = '$email'";
+    $checkResult = mysqli_query($conn, $checkQuery);
+    
+    if (mysqli_num_rows($checkResult) > 0) {
+        // Jika username sudah digunakan
+        echo "
+        <script>
+            alert('Username sudah digunakan! Silakan gunakan username lain.');
+            document.location.href = 'registrasi.php';
+        </script>
+        ";
+    }
+    
     if ($password !== $password_confirm) {
         echo "
         <script>
@@ -16,6 +30,8 @@ if(isset($_POST["submit"])) {
         </script>";
         exit;
     }
+    
+
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 

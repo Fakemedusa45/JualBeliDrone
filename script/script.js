@@ -35,4 +35,19 @@ document.getElementById('swapneumode').addEventListener('change', function() {
     });
   });
 
+  const logout = document.querySelectorAll('.logout');
+
+  logout.forEach(link => {
+    link.addEventListener('click', function(event) {
+      
+      event.preventDefault();
+
+      const userConfirmation = confirm('Apakah anda yakin ingin Logout?');
+
+      if (userConfirmation) {
+        window.location.href = this.href;  
+      }
+    });
+  });
+
 
