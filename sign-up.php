@@ -4,10 +4,22 @@ require "koneksi.php";
 if(isset($_POST["submit"])) {
     $username = $_POST["username"];
     $email = $_POST["email"];
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $password = trim($_POST["password"]);
+    $password_confirm = trim($_POST["password_confirm"]);
     $role = "user";
 
-    $sql = "INSERT INTO user VALUES ('', '$username', '$email','$password', '$role')";
+    if ($password !== $password_confirm) {
+        echo "
+        <script>
+            alert('Password tidak cocok');
+            document.location.href = 'sign-up.php';
+        </script>";
+        exit;
+    }
+
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO user (username, email, password, role) VALUES ('$username', '$email','$hashed_password', '$role')";
 
     $result = mysqli_query($conn, $sql);
 
@@ -112,6 +124,23 @@ if(isset($_POST["submit"])) {
             <label for="password" class="label-input">
                 Password
             </label>
+            </div>
+
+            <br>
+
+            <div class="form-control">
+                <input
+                    name="password_confirm"
+                    type="password"
+                    id="password_confirm"
+                    class="text-input input-neu"
+                    autocomplete="off"
+                    placeholder="Konfirmasi Password"
+                    required
+                />
+                <label for="password_confirm" class="label-input">
+                    Konfirmasi Password
+                </label>
             </div>
         
             <br>
