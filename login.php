@@ -3,14 +3,14 @@ session_start();
 require "koneksi.php";
 
 if (isset($_POST["submit"])) {
-    $email = $_POST["email"];
+    $identifier = $_POST["identifier"];
     $password = $_POST["password"];
     
-    // Query untuk mendapatkan data user berdasarkan email
-    $query = "SELECT * FROM user WHERE email = '$email'";
+    // Query untuk mendapatkan data user berdasarkan email atau username
+    $query = "SELECT * FROM user WHERE email = '$identifier' OR username = '$identifier'";
     $result = mysqli_query($conn, $query);
     
-    // Cek apakah email ditemukan
+    // Cek apakah email atau username ditemukan
     if (mysqli_num_rows($result) === 1) {
         // Ambil data pengguna
         $user = mysqli_fetch_assoc($result);
@@ -28,7 +28,7 @@ if (isset($_POST["submit"])) {
                 </script>
                 ";
             } else {
-                $_SESSION['email'] = $email;
+                $_SESSION['email'] = $user['email'];
                 $_SESSION['password'] = $user['password'];
                 $_SESSION['role'] = 'user'; // session untuk user
                 echo "
@@ -48,7 +48,7 @@ if (isset($_POST["submit"])) {
     } else {
         echo "
         <script>
-        alert('email tidak ditemukan!');
+        alert('email atau username tidak ditemukan!');
         </script>
         ";
     }
@@ -93,16 +93,16 @@ if (isset($_POST["submit"])) {
 
             <div class="form-control">
                 <input
-                  name="email"
-                  type="email"
-                  id="email"
+                  name="identifier"
+                  type="text"
+                  id="identifier"
                   class="text-input input-neu"
                   autocomplete="off"
-                  placeholder="E-mail"
+                  placeholder="Email atau Username"
                   required
                 />
-                <label for="email" class="label-input">
-                  E-mail
+                <label for="identifier" class="label-input">
+                  Email atau Username
                 </label>
               </div>
 

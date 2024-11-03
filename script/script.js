@@ -18,36 +18,43 @@ document.getElementById('swapHamburger').addEventListener('change', function() {
 
 document.getElementById('swapneumode').addEventListener('change', function() {
     document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
 });
 
-  const droneContainers = document.querySelectorAll('.drone-container a');
+window.addEventListener('load', function() {
+    const darkMode = localStorage.getItem('darkMode') === 'true';
+    if (darkMode) {
+        document.body.classList.add('dark-mode');
+        document.getElementById('swapneumode').checked = true;
+    }
+});
 
-  droneContainers.forEach(link => {
+const droneContainers = document.querySelectorAll('.drone-container a');
+
+droneContainers.forEach(link => {
     link.addEventListener('click', function(event) {
       
-      event.preventDefault();
+        event.preventDefault();
 
-      const userConfirmation = confirm('Apakah anda yakin ingin melihat info lengkap dari drone ini?');
+        const userConfirmation = confirm('Apakah anda yakin ingin melihat info lengkap dari drone ini?');
 
-      if (userConfirmation) {
-        window.location.href = this.href;  
-      }
+        if (userConfirmation) {
+            window.location.href = this.href;  
+        }
     });
-  });
+});
 
-  const logout = document.querySelectorAll('.logout');
+const logout = document.querySelectorAll('.logout');
 
-  logout.forEach(link => {
+logout.forEach(link => {
     link.addEventListener('click', function(event) {
       
-      event.preventDefault();
+        event.preventDefault();
 
-      const userConfirmation = confirm('Apakah anda yakin ingin Logout?');
+        const userConfirmation = confirm('Apakah anda yakin ingin Logout?');
 
-      if (userConfirmation) {
-        window.location.href = this.href;  
-      }
+        if (userConfirmation) {
+            window.location.href = this.href;  
+        }
     });
-  });
-
-
+});
