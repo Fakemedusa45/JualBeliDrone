@@ -29,7 +29,7 @@
             if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
               echo "
               <li class='navbar-item'>
-                <a href='admin/admin.php'>Admin</a>
+                <a href='admin.php'>Admin</a>
               </li>";
             }
             ?>

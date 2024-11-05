@@ -1,25 +1,24 @@
 <?php 
     session_start();
-    if ($_SESSION['role'] != 'user'){
+    if ($_SESSION['role'] != 'admin'){
         header('location: index.php');
         exit();
     }
-
+    
     require "koneksi.php";
-    $sql = mysqli_query($conn, "SELECT * FROM belanja");
+    $sql = mysqli_query($conn, "SELECT * FROM etalase");
 
-    $belanja = [];
+    $etalase = [];
 
     while ($row = mysqli_fetch_assoc($sql)) {
-        $belanja[] = $row;
+        $etalase[] = $row;
     }
     
     if (isset($_GET['search'])) {
         $search = $_GET['search'];
     
         // Query SQL untuk mencari data berdasarkan nama atau NIM
-        $sql = mysqli_query($conn, "SELECT * FROM belanja WHERE nama LIKE '%$search%' OR merk LIKE '%$search%'");
-        // dari farrel: tambahkan query where id_user sama kayak session[id_user]
+        $sql = mysqli_query($conn, "SELECT * FROM etalase WHERE nama LIKE '%$search%' OR merk LIKE '%$search%'");
     
         // Menyiapkan array untuk menyimpan hasil pencarian
         $cari = [];
@@ -29,7 +28,7 @@
             $cari[] = $row;
         }
 
-        $belanja = $cari;
+        $etalase = $cari;
     }
 ?>
 
@@ -38,7 +37,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keranjang Belanjaan</title>
+    <title>Daftar etalase</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,7 +63,7 @@
     <div class="utama-banget">
         <div class="utama">
             <div class="kartu-belanja">
-                <h1>KERANJANG</h1>
+                <h1>ETALASE</h1>
                 <br>
                 
                 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -78,7 +77,7 @@
 
                 <form action="" method="GET" novalidate="novalidate" onsubmit="return true;" class="searchbox sbx-custom">
                     <div role="search" class="sbx-custom__wrapper">
-                        <input type="text" name="search" placeholder="Cari nama pembeli atau merk disini" autocomplete="off" required="required" class="sbx-custom__input">
+                        <input type="text" name="search" placeholder="Cari merk disini" autocomplete="off" required="required" class="sbx-custom__input">
                         <button type="submit" title="Submit your search query." class="sbx-custom__submit">
                             <svg role="img" aria-label="Search">
                                 <use xlink:href="#sbx-icon-search-18"></use>
@@ -105,38 +104,27 @@
                     <thead>
                         <tr>
                             <th>NO</th>
-                            <th>Foto Penerima</th>
-                            <th>Nama Penerima</th>
-                            <th>Alamat Tujuan</th>
                             <th>Merk</th>
-                            <th>Jumlah</th>
-                            <th>Paket</th>
-                            <th>Aksi</th>
+                            <th>Deskripsi produk</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i =1; foreach($belanja as $belanja) : ?>
+                        <?php $i =1; foreach($etalase as $etalase) : ?>
                         <tr>
                             <td><?= $i ?></td>
-                            <?php $direktori = "imgBelanja/" . $belanja["foto"]; ?>
-                            <td><?php if ($belanja["foto"] == "") {
-                                echo "foto belum ada";
-                            } else {
-                                echo "<img src='$direktori' alt='foto' width='70px' height='50px'>";
-                            } ?></td>
-                            <td><?= $belanja["nama"] ?></td>
-                            <td><?= $belanja["alamat"] ?></td>
-                            <td><?= $belanja["merk"] ?></td>
-                            <td><?= $belanja["jumlah"] ?></td>
-                            <td><?= $belanja["paket"] ?></td>
-                            <td><a class="aksi" href="edit.php?id_produk=<?= $belanja['id_produk'] ?>">Ubah</a> | <a class="aksi" href="delete.php?id_produk=<?= $belanja['id_produk'] ?>" onclick="return confirm('Yakin ingin menghapus data?');">Hapus</a></td>
+                            <td><?= $etalase["merk"] ?></td>
+                            <td><?= $etalase["desk"] ?></td>
+                            <td>
+                                <a class="aksi" href="edit.php?id_etalase=<?= $etalase['id_etalase'] ?>">Ubah</a> | 
+                                <a class="aksi" href="delete.php?id_etalase=<?= $etalase['id_etalase'] ?>" onclick="return confirm('Yakin ingin menghapus data?');">Hapus</a>
+                            </td>
                         </tr>
                         <?php $i++; endforeach ?>
                     </tbody>
                 </table>
                 <br>
                 <br>
-                <a href="belanja.php" class="btn btn-outline" id="konfirmasi-belanja">Belanja</a>
+                <a href="AdminTambah.php" class="btn btn-outline" id="konfirmasi-belanja">Tambah</a>
             </div>
         </div>
     </div>

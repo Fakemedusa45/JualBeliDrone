@@ -1,4 +1,8 @@
 <?php
+ if ($_SESSION['role'] != 'user'){
+    header('location: index.php');
+    exit();
+}
 require "koneksi.php";
 
 $id_produk = $_GET['id_produk'];
