@@ -31,7 +31,14 @@ if(isset($_POST["submit"])) {
         exit;
     }
     
-
+    if (strlen($password) < 8) {
+        echo "
+        <script>
+            alert('Password harus minimal 8 karakter');
+            document.location.href = 'sign-up.php';
+        </script>";
+        exit;
+    }
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
