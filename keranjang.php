@@ -105,9 +105,6 @@
                     <thead>
                         <tr>
                             <th>NO</th>
-                            <th>Foto Penerima</th>
-                            <th>Nama Penerima</th>
-                            <th>Alamat Tujuan</th>
                             <th>Merk</th>
                             <th>Jumlah</th>
                             <th>Paket</th>
@@ -118,14 +115,6 @@
                         <?php $i =1; foreach($belanja as $belanja) : ?>
                         <tr>
                             <td><?= $i ?></td>
-                            <?php $direktori = "imgBelanja/" . $belanja["foto"]; ?>
-                            <td><?php if ($belanja["foto"] == "") {
-                                echo "foto belum ada";
-                            } else {
-                                echo "<img src='$direktori' alt='foto' width='70px' height='50px'>";
-                            } ?></td>
-                            <td><?= $belanja["nama"] ?></td>
-                            <td><?= $belanja["alamat"] ?></td>
                             <td><?= $belanja["merk"] ?></td>
                             <td><?= $belanja["jumlah"] ?></td>
                             <td><?= $belanja["paket"] ?></td>
@@ -136,7 +125,7 @@
                 </table>
                 <br>
                 <br>
-                <a href="belanja.php" class="btn btn-outline" id="konfirmasi-belanja">Belanja</a>
+                <a href="checkout.php" class="btn btn-outline" id="konfirmasi-belanja">Checkout</a>
             </div>
         </div>
     </div>

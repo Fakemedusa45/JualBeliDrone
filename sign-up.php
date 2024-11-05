@@ -7,6 +7,7 @@ if(isset($_POST["submit"])) {
     $password = trim($_POST["password"]);
     $password_confirm = trim($_POST["password_confirm"]);
     $role = "user";
+    $namaLengkap = $_POST["nama_lengkap"];
 
     // Cek apakah username sudah digunakan
     $checkQuery = "SELECT * FROM user WHERE email = '$email'";
@@ -42,7 +43,7 @@ if(isset($_POST["submit"])) {
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO user (username, email, password, role) VALUES ('$username', '$email','$hashed_password', '$role')";
+    $sql = "INSERT INTO user (username, email, password, role, namaLengkap) VALUES ('$username', '$email','$hashed_password', '$role', '$namaLengkap')";
 
     $result = mysqli_query($conn, $sql);
 
@@ -100,6 +101,23 @@ if(isset($_POST["submit"])) {
             <h1>REGISTER</h1>
             <br>
             
+            <div class="form-control">
+            <input
+                name="nama_lengkap"
+                type="text"
+                id="nama_lengkap"
+                class="text-input input-neu"
+                autocomplete="off"
+                placeholder="Nama Lengkap"
+                required
+            />
+            <label for="nama_lengkap" class="label-input">
+                Nama Lengkap
+            </label>
+            </div>
+
+            <br>
+
             <div class="form-control">
             <input
                 name="username"

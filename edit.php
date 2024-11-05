@@ -45,7 +45,7 @@ if(isset($_POST["submit"])) {
       }
     }
 
-    $sql = "UPDATE belanja SET nama='$nama', alamat='$alamat', merk='$merk', jumlah='$jumlah',  paket='$paket', foto='$file_name' WHERE id_produk='$id_produk'";
+    $sql = "UPDATE belanja SET jumlah='$jumlah' WHERE id_produk='$id_produk'";
 
     $result = mysqli_query($conn, $sql);
 
