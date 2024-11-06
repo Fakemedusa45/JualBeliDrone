@@ -9,7 +9,7 @@
         echo "
         <script>
         alert('Berhasil Menghapus Data Belanjaan!');
-        document.location.href = 'index.php';
+        document.location.href = 'keranjang.php';
         </script>
         ";
     }

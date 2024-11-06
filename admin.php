@@ -17,7 +17,7 @@
     if (isset($_GET['search'])) {
         $search = $_GET['search'];
     
-        // Query SQL untuk mencari data berdasarkan nama atau NIM
+        // Query SQL untuk mencari data berdasarkan merk
         $sql = mysqli_query($conn, "SELECT * FROM etalase WHERE nama LIKE '%$search%' OR merk LIKE '%$search%'");
     
         // Menyiapkan array untuk menyimpan hasil pencarian
@@ -30,6 +30,7 @@
 
         $etalase = $cari;
     }
+
 ?>
 
 <!DOCTYPE html>
@@ -104,19 +105,29 @@
                     <thead>
                         <tr>
                             <th>NO</th>
+                            <th>Gambar</th>
                             <th>Merk</th>
+                            <th>Harga</th>
                             <th>Deskripsi produk</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i =1; foreach($etalase as $etalase) : ?>
                         <tr>
                             <td><?= $i ?></td>
+                            <?php $direktori = "imgEtalase/" . $etalase["gambar"]; ?>
+                            <td><?php if ($etalase["gambar"] == "") {
+                                echo "gambar belum ada";
+                            } else {
+                                echo "<img src='$direktori' alt='gambar drone' width='70px' height='50px'>";
+                            } ?></td>
                             <td><?= $etalase["merk"] ?></td>
+                            <td><?= $etalase["harga"] ?></td>
                             <td><?= $etalase["desk"] ?></td>
                             <td>
-                                <a class="aksi" href="edit.php?id_etalase=<?= $etalase['id_etalase'] ?>">Ubah</a> | 
-                                <a class="aksi" href="delete.php?id_etalase=<?= $etalase['id_etalase'] ?>" onclick="return confirm('Yakin ingin menghapus data?');">Hapus</a>
+                                <a class="aksi" href="AdminEdit.php?id_etalase=<?= $etalase['id_etalase'] ?>">Ubah</a> | 
+                                <a class="aksi" href="AdminDelete.php?id_etalase=<?= $etalase['id_etalase'] ?>" onclick="return confirm('Yakin ingin menghapus data?');">Hapus</a>
                             </td>
                         </tr>
                         <?php $i++; endforeach ?>

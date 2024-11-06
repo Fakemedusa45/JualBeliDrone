@@ -1,11 +1,31 @@
 <?php
 require "koneksi.php";
 
+session_start();
+if ($_SESSION['role'] != 'admin'){
+    header('location: admin.php');
+    exit();
+}
+
 if(isset($_POST["submit"])) {
     $merk = $_POST["merk"];
+    $harga = $_POST["harga"];
     $desk = $_POST["desk"];
+    $gambar = $_POST["gambar"];
 
-        $sql = "INSERT INTO belanja VALUES ('','$nama','$alamat', '$merk', '$jumlah', '$paket', '$newFileName')";
+    $tmp_name = $_FILES["gambar"]["tmp_name"];
+    $file_name = $_FILES["gambar"]["name"];
+
+    $ekstensi = explode('.', $file_name);
+    $ekstensi = strtolower(end($ekstensi));
+    $ekstensi = "." . $ekstensi;
+
+    $newFileName = uniqid() . $ekstensi;
+
+    if(move_uploaded_file($tmp_name, "imgEtalase/".  $newFileName)){
+
+
+        $sql = "INSERT INTO etalase VALUES ('$merk','$desk', '$newFileName', '$harga', '')";
     
         $result = mysqli_query($conn, $sql);
     
@@ -13,18 +33,25 @@ if(isset($_POST["submit"])) {
             echo "
             <script>
                 alert('Berhasil Menambah Data ke Etalase!');
-                document.location.href = 'keranjang.php';
+                document.location.href = 'admin.php';
             </script>";
         } else {
             echo "
             <script>
                 alert('Gagal Menambah Data ke Etalase!');
-                document.location.href = 'belanja.php';
+                document.location.href = 'admin.php';
             </script>";
         }
 
+    }  else {
+        echo "
+            <script>
+            alert('data file tidak valid!');
+            </script>
+            ";
     }
 
+}
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +59,7 @@ if(isset($_POST["submit"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tambah Etalase</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,22 +107,43 @@ if(isset($_POST["submit"])) {
 
             <div class="form-control">
                 <input
-                    type="text"
-                    id="desk"
-                    name="desk"
+                    type="number"
+                    id="harga"
+                    name="harga" 
                     class="text-input input-info"
                     autocomplete="off"
-                    placeholder="deskripsi"
+                    placeholder="Harga Drone"
                     required
                 />
-                <label for="desk" class="label-input">
-                    Deskripsi
+                <label for="harga" class="label-input">
+                    harga Drone
                 </label>
             </div>
 
+            
             <br>
 
-            <button type ="submit" name="submit" class="btn btn-outline">BUY</button>
+            <div class="form-control">
+                <textarea
+                    name="desk"
+                    id="desk"
+                    cols="30"
+                    rows="10"
+                    placeholder="Jelaskan Drone disini..."
+                    class="textarea textarea-info"
+                ></textarea>
+                <label for="message" class="label-input">
+                    Jelaskan Drone disini...
+                </label>
+            </div>
+            
+            <br>
+            
+            <input type="file" name="gambar" id="gambar" class="file-input file-neu">
+
+            <br>
+            
+            <button type ="submit" name="submit" class="btn btn-outline">TAMBAH</button>
         </form>
     </div>
     </div>
