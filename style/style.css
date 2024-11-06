@@ -198,11 +198,6 @@ body{
     color: #000000;
   }
 
-  .drone-container a {
-    text-decoration: none;
-    color: rgb(0, 0, 0);
-  }
-
   .tentang {
     padding:15px 0;
     border-bottom: 1px solid black;
@@ -266,7 +261,7 @@ body{
   box-shadow: 1px 2px 16px 0px #ffffff;
 }
 
-.dark-mode .drone-container a {
+.dark-mode .drone-container h3 {
   color: white;
 }
 
@@ -310,8 +305,8 @@ body{
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 5rem;
-  right: 5rem;
+  bottom: 1rem;
+  right: 2rem;
   z-index: 9999;
   transition: 0.3s ease;
 }

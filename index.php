@@ -1,5 +1,15 @@
 <?php
-session_start();
+  session_start();
+
+  require "koneksi.php";
+
+  $sql = mysqli_query($conn, "SELECT * FROM etalase");
+
+  $etalase = [];
+
+  while ($row = mysqli_fetch_assoc($sql)) {
+      $etalase[] = $row;
+  }
 ?>
 
 <!DOCTYPE html>
@@ -45,49 +55,21 @@ session_start();
     <section class="drone" id="listdrone">
       <h2>DJI DRONE</h2>
       <div class="drone-display">
+        <?php $i=1; $limit = 5; foreach($etalase as $etalase) : ?>
           <div class="drone-container" id ="drone-container">
-
-              <h3><a href="https://www.dji.com/id/mini-4-pro?site=brandsite&from=homepage">
-                DJI MINI 4 PRO
-              </a></h3>
-              <ul>
-                  <li>Under 249g</li>
-                  <li>4K/60fps HDR</li>
-                  <li>True Vertical Shooting</li>
-              </ul>
-          </div>
-          <div class="drone-container" id="drone-container">
-              <h3><a href="https://www.dji.com/id/neo?site=brandsite&from=homepage">
-                DJI NEO
-              </a></h3>
-              <ul>
-                  <li>AI Subject Tracking</li>
-                  <li>Multiple Control Options</li>
-                  <li>Full-Coverage Propeller Guards</li>
-              </ul>
-          </div>
-          <div class="drone-container" id="drone-container">
-              <h3><a href="https://www.dji.com/id/mavic-3-pro">
-                DJI MAVIC 3 PRO
-              </a></h3>
-              <ul>
-                  <li>Dual Tele Camera</li>
-                  <li>15 KM HD Video Transmission</li>
-                  <li>43 Min Max Flight Time</li>
-              </ul>
-          </div>
-          <div class="drone-container" id="drone-container">
-              <h3><a href="https://www.dji.com/id/inspire-3">
-                DJI INSPIRE 3
-              </a></h3>
-              <ul>
-                  <li>3D Dolly</li>
-                  <li>Repeatable Routes</li>
-                  <li>Ultra-Wide Night-Vision FPV Camera</li>
-              </ul>
-          </div>
+            <h3>
+              <?= $etalase["merk"] ?>
+            </h3>
+            <p>
+              <?= $etalase["desk"] ?>
+            </p>
+            <p>
+              <td><?= $etalase["harga"] ?></td>
+            </p>
+        </div>
+        <?php $i++; endforeach ?>
       </div>
-  </section>
+    </section>
     
   <footer class="puter" id="about">
     <div class="tentang">

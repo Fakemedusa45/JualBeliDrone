@@ -46,7 +46,7 @@ if(isset($_POST["submit"])) {
       }
     }
 
-    $sql = "UPDATE etalase SET merk='$merk', harga='$harga', desk='$desk' WHERE id_etalase='$id_etalase'";
+    $sql = "UPDATE etalase SET merk='$merk', harga='$harga', desk='$desk', gambar='$file_name' WHERE id_etalase='$id_etalase'";
 
     $result = mysqli_query($conn, $sql);
 

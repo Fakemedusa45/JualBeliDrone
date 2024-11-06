@@ -11,7 +11,7 @@
               </a>
             </li>
             <li class="navbar-item">
-              <a href="index.php#listdrone">
+              <a href="etalase.php">
                 Etalase
               </a>
             </li>
