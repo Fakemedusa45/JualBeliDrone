@@ -15,6 +15,8 @@ while ($row = mysqli_fetch_assoc($result)){
     $etalase[]= $row;
 }
 
+$etalase = $etalase[0];
+
 if(isset($_POST["submit"])) {
     $merk = $_POST["merk"];
     $harga = $_POST["harga"];
@@ -23,11 +25,11 @@ if(isset($_POST["submit"])) {
 
     $oldImage = $_POST['oldimg'];
 
-    if ($_FILES['foto']['error'] === 4) { // cek apakah ada file yg diupload
-      $file_name = $oldImg; // kalo tidak, akan mengambil gambar lama
+    if ($_FILES['gambar']['error'] === 4) { // cek apakah ada file yg diupload
+      $file_name = $oldimg; // kalo tidak, akan mengambil gambar lama
     } else {
-      $tmp_name = $_FILES['foto']['tmp_name']; // mengambil path temporary file
-      $file_name = $_FILES['foto']['name']; // mengambil nama file
+      $tmp_name = $_FILES['gambar']['tmp_name']; // mengambil path temporary file
+      $file_name = $_FILES['gambar']['name']; // mengambil nama file
 
       // cek apakah yang diupload adalah file gambar
       $validExtensions = ['png', 'jpg', 'jpeg'];
@@ -44,7 +46,7 @@ if(isset($_POST["submit"])) {
       }
     }
 
-    $sql = "UPDATE etalase SET jmerk='$merk' WHERE id_etalase='$id_etalase'";
+    $sql = "UPDATE etalase SET merk='$merk', harga='$harga', desk='$desk' WHERE id_etalase='$id_etalase'";
 
     $result = mysqli_query($conn, $sql);
 
@@ -107,7 +109,7 @@ if(isset($_POST["submit"])) {
                     class="text-input input-info"
                     autocomplete="off"
                     placeholder="Merk Drone"
-                    value="<?php $etalase["merk"] ?>"
+                    value="<?= $etalase["merk"] ?>"
                     required
                 />
                 <label for="merk" class="label-input">
@@ -125,6 +127,7 @@ if(isset($_POST["submit"])) {
                     class="text-input input-info"
                     autocomplete="off"
                     placeholder="Harga Drone"
+                    value="<?= $etalase["harga"] ?>"
                     required
                 />
                 <label for="harga" class="label-input">
@@ -143,6 +146,7 @@ if(isset($_POST["submit"])) {
                     rows="10"
                     placeholder="Jelaskan Drone disini..."
                     class="textarea textarea-info"
+                    value="<?= $etalase["desk"] ?>"
                 ></textarea>
                 <label for="message" class="label-input">
                     Jelaskan Drone disini...
@@ -151,7 +155,12 @@ if(isset($_POST["submit"])) {
             
             <br>
             
-            <input type="file" name="gambar" id="gambar" class="file-input file-neu">
+            <div class="input-field" style="border: 1px solid rgba(0, 0, 0, 0.6); border-radius: 9px; padding: 7px 10px; font-size:16px">
+            <label for="gambar" class="label-field">Gambar</label>
+            <input type="file" name="gambar" id="gambar">
+            <br>
+            <img src="imgEtalase/<?= $etalase['gambar'] ?>" alt="<?= $etalase['gambar'] ?>" width="80px" height="100px">
+            </div>
 
             <br>
             

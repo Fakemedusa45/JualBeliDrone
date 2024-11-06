@@ -25,7 +25,7 @@ if(isset($_POST["submit"])) {
 
     if(move_uploaded_file($tmp_name, "imgBelanja/".  $newFileName)){
 
-        $sql = "INSERT INTO belanja VALUES ('','$nama','$alamat', '$merk', '$jumlah', '$paket', '$newFileName')";
+        $sql = "INSERT INTO belanja (nama, alamat, merk, jumlah, paket, gambar) VALUES ('$nama','$alamat', '$merk', '$jumlah', '$paket', '$newFileName')";
     
         $result = mysqli_query($conn, $sql);
     
