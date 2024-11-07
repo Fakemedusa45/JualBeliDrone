@@ -99,7 +99,7 @@
               <?= $etalase["desk"] ?>
             </p>
             <p>
-              <td><?= $etalase["harga"] ?></td>
+              <td><?= "Rp" . " " .  $etalase["harga"] ?></td>
             </p>
         </div>
         <?php $i++; endforeach ?>

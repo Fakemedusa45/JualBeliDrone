@@ -53,7 +53,7 @@
           </p>
     </main>
     <section class="drone" id="listdrone">
-      <h2>DJI DRONE</h2>
+      <h2>REKOMENDASI DRONE</h2>
       <div class="drone-display">
         <?php $i=1; $limit = 5; foreach($etalase as $etalase) : ?>
           <div class="drone-container" id ="drone-container">
@@ -64,24 +64,51 @@
               <?= $etalase["desk"] ?>
             </p>
             <p>
-              <td><?= $etalase["harga"] ?></td>
+              <td><?= "Rp" . " " . $etalase["harga"] ?></td>
             </p>
         </div>
-        <?php $i++; endforeach ?>
+        <?php
+            $i++;
+            if ($i > $limit) {
+                break;
+            }
+        ?>
+        <?php endforeach ?>
       </div>
+      <a href="etalase.php">Lihat selengkapnya...</a>
     </section>
     
-  <footer class="puter" id="about">
-    <div class="tentang">
-      <a href="https://www.instagram.com/rifram._/">
-        Instagram
-      </a>
-      <a href="https://github.com/Fakemedusa45">
-        Github
-      </a>
-    </div>
-    <div class="saya">
-      Halo sobat semuanya! Perkenalkan nama saya Rifqi Ramadhan selaku yang membuat website ini,saya dari kelas A'23 dengan nim 2309106007.
+    <footer class="drone" id="about">
+    <h2>ABOUT US</h2>
+    <div class="about-display">
+    
+      <!-- Section 1: Image, Who We Are -->
+      <div class="about-section">
+        <img src="img/Rifqi.jpg" alt="Foto Profil">
+        <div class="text-content">
+          <h2>Rifqi Ramadhan</h2>
+          <p>Ada kah divisi selain media?</p>
+        </div>
+      </div>
+      
+      <!-- Section 2: What We Offer, Image -->
+      <div class="about-section reverse">
+        <img src="img/cecel.jpg" alt="Foto Profil">
+        <div class="text-content">
+          <h2>Chaelse Dengen</h2>
+          <p>Explore a diverse range of drones, from beginner models to advanced professional options. Our platform makes it easy to buy or sell drones and accessories, complete with verified listings, user reviews, and a straightforward listing process for sellers.</p>
+        </div>
+      </div>
+
+      <!-- Section 3: Image, Why Choose Us -->
+      <div class="about-section">
+        <img src="img/akmal.jpg" alt="Foto Profil">
+        <div class="text-content">
+          <h2>Akmal Alvian Pratama</h2>
+          <p>Kalo ga perlengkapan ya humas...</p>
+        </div>
+      </div>
+
     </div>
   </footer>
 
