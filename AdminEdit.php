@@ -155,10 +155,10 @@ if(isset($_POST["submit"])) {
             <br>
             
             <div class="input-field" style="border: 1px solid rgba(0, 0, 0, 0.6); border-radius: 9px; padding: 7px 10px; font-size:16px">
-            <label for="gambar" class="label-field">Gambar</label>
-            <input type="file" name="gambar" id="gambar">
-            <br>
-            <img src="imgEtalase/<?= $etalase['gambar'] ?>" alt="<?= $etalase['gambar'] ?>" width="80px" height="100px">
+                <label for="gambar" class="label-field">Gambar</label>
+                <input type="file" name="gambar" id="gambar">
+                <br>
+                <img src="imgEtalase/<?= $etalase['gambar'] ?>" alt="<?= $etalase['gambar'] ?>" width="80px" height="100px">
             </div>
 
             <br>

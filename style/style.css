@@ -546,6 +546,10 @@ body{
   color: #000000
 }
 
+.about-section p a{
+  color: #000000;
+}
+
 .dark-mode .about-section {
   display: flex;
   align-items: center;
@@ -569,6 +573,10 @@ body{
   font-size: 1em;
   line-height: 1.6;
   color: #ffffff
+}
+
+.dark-mode .about-section p a{
+  color: #ffffff;
 }
 
 .drone-image {

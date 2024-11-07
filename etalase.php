@@ -16,7 +16,6 @@
 
     // Query SQL untuk mencari data berdasarkan merk drone
     $sql = mysqli_query($conn, "SELECT * FROM etalase WHERE merk LIKE '%$search%'");
-    // dari farrel: tambahkan query where id_user sama kayak session[id_user]
 
     // Menyiapkan array untuk menyimpan hasil pencarian
     $cari = [];

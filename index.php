@@ -90,7 +90,7 @@ while ($row = mysqli_fetch_assoc($sql)) {
         <img src="img/Rifqi.jpg" alt="Foto Profil">
         <div class="text-content">
           <h2>Rifqi Ramadhan</h2>
-          <p>Ada kah divisi selain media?</p>
+          <p>Ada kah divisi selain media? <br><br> follow ig ku pale <a href="https://www.instagram.com/rifram._?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">@rifram._</a></p>
         </div>
       </div>
 
@@ -98,7 +98,7 @@ while ($row = mysqli_fetch_assoc($sql)) {
         <img src="img/cecel.jpg" alt="Foto Profil">
         <div class="text-content">
           <h2>Chaelse Dengen</h2>
-          <p>Explore a diverse range of drones, from beginner models to advanced professional options. Our platform makes it easy to buy or sell drones and accessories, complete with verified listings, user reviews, and a straightforward listing process for sellers.</p>
+          <p>Tell the truth, even though it's bitter</p>
         </div>
       </div>
 
@@ -106,7 +106,7 @@ while ($row = mysqli_fetch_assoc($sql)) {
         <img src="img/akmal.jpg" alt="Foto Profil">
         <div class="text-content">
           <h2>Akmal Alvian Pratama</h2>
-          <p>Kalo ga perlengkapan ya humas...</p>
+          <p><i>JANGAN BIKIN MALU DIVISI PERDEK</i><br>--BANG HUDA</p>
         </div>
       </div>
 
