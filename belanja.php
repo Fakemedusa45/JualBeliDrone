@@ -1,9 +1,9 @@
 <?php
 session_start();
- if ($_SESSION['role'] != 'user'){
-    header('location: index.php');
-    exit();
-}
+//  if ($_SESSION['role'] != 'user'){
+//     header('location: index.php');
+//     exit();
+// }
 
 require "koneksi.php";
 

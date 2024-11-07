@@ -101,6 +101,16 @@
           <p>
             <?= $etalase["desk"] ?>
           </p>
+          <?php 
+          if (isset($_SESSION['role']) && $_SESSION['role'] != 'user') {
+              echo '
+              <form action="keranjang.php" method="post">
+                  <input type="hidden" name="id_produk" value="' . $etalase['id_etalase'] . '">
+                  <input type="hidden" name="jumlah" value="1">
+                  <button type="submit" class="btn btn-add">Tambahkan ke Keranjang</button>
+              </form>';
+          }
+          ?>
         </div>
         <?php
         $i++;

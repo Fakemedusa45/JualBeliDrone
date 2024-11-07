@@ -20,7 +20,7 @@
             if (isset($_SESSION['email'])){
               echo 
               "<li class='navbar-item'>
-                <a href= 'keranjang.php'>BUY</a>
+                <a href= 'keranjang.php'>Keranjang</a>
               </li>";
             }
             ?>

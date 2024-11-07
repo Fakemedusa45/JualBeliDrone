@@ -77,7 +77,7 @@
                             <th>NO</th>
                             <th>Merk</th>
                             <th>Jumlah</th>
-                            <th>Harga</th>
+                            <th>Harga/item</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>

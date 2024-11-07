@@ -1,55 +1,32 @@
-<?php
- if ($_SESSION['role'] != 'user'){
-    header('location: edit.php');
+<?php 
+session_start();
+if ($_SESSION['role'] != 'user') {
+    header('location: index.php');
     exit();
 }
+
 require "koneksi.php";
 
 $id_produk = $_GET['id_produk'];
+$user_id = $_SESSION['id_user'];  // Pastikan id_user tersimpan di session saat login
 
-$result = mysqli_query($conn, "SELECT * FROM belanja WHERE id_produk = $id_produk");
+// Query untuk mendapatkan data produk yang ingin diedit berdasarkan user_id dan id_produk
+$sql = mysqli_query($conn, "SELECT belanja.*, etalase.merk, etalase.harga 
+                            FROM belanja 
+                            JOIN etalase ON belanja.id_produk = etalase.id_etalase
+                            WHERE belanja.id_user = '$user_id' AND belanja.id_produk = '$id_produk'");
 
-while ($row = mysqli_fetch_assoc($result)){
-    $belanja[]= $row;
-}
+$belanja = mysqli_fetch_assoc($sql); // Ambil hasil query sebagai array
 
-$belanja = $belanja[0];
+if (isset($_POST["submit"])) {
+    $jumlah = $_POST["jumlah"]; // Ambil input jumlah dari form
 
-if(isset($_POST["submit"])) {
-    $nama = $_POST["nama"];
-    $alamat = $_POST["alamat"];
-    $merk = $_POST["merk"];
-    $jumlah = $_POST["jumlah"];
-    $paket = $_POST["paket"];
+    // Query untuk update jumlah belanja
+    $update_sql = "UPDATE belanja SET jumlah='$jumlah' WHERE id_produk='$id_produk' AND id_user='$user_id'";
 
-    $oldImg = $_POST['oldimg'];
+    $result = mysqli_query($conn, $update_sql);
 
-    if ($_FILES['foto']['error'] === 4) { // cek apakah ada file yg diupload
-      $file_name = $oldImg; // kalo tidak, akan mengambil gambar lama
-    } else {
-      $tmp_name = $_FILES['foto']['tmp_name']; // mengambil path temporary file
-      $file_name = $_FILES['foto']['name']; // mengambil nama file
-
-      // cek apakah yang diupload adalah file gambar
-      $validExtensions = ['png', 'jpg', 'jpeg'];
-      $fileExtension = explode('.', $file_name);
-      $fileExtension = strtolower(end($fileExtension));
-      if (!in_array($fileExtension, $validExtensions)) {
-        echo "
-                <script>
-                    alert('Tolong upload file gambar!');
-                </script>";
-      } else {
-        move_uploaded_file($tmp_name, 'imgBelanja/' . $file_name);
-        unlink('imgBelanja/'.$oldImg); // menghapus gambar lama dari folder images
-      }
-    }
-
-    $sql = "UPDATE belanja SET jumlah='$jumlah' WHERE id_produk='$id_produk'";
-
-    $result = mysqli_query($conn, $sql);
-
-    if($result){
+    if ($result) {
         echo "
         <script>
             alert('Berhasil Mengubah data belanjaan di keranjang!');
@@ -59,11 +36,10 @@ if(isset($_POST["submit"])) {
         echo "
         <script>
             alert('Gagal Mengubah data belanjaan di keranjang!');
-            document.location.href = 'belanja.php';
+            document.location.href = 'index.php';
         </script>";
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +47,7 @@ if(isset($_POST["submit"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>edit</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,51 +65,12 @@ if(isset($_POST["submit"])) {
       }
     </style>
 </head>
-<body  style="background-image: url(img/background_dji_drone.jpg);">
+<body style="background-image: url(img/background_dji_drone.jpg);">
 <?php require("night.php") ?>    
 <div class="utama-banget">
-
     <div class="utama">
         <form class="kartu-belanja" action="" method="post" enctype="multipart/form-data">
             <h2>PEMBELIAN</h2>
-
-            <input type="hidden" name="oldimg" value="<?= $belanja['foto'] ?>">
-
-            <br>
-
-            <div class="form-control">
-                <input
-                    type="text"
-                    id="nama"
-                    name="nama" 
-                    class="text-input input-info"
-                    autocomplete="off"
-                    placeholder="nama"
-                    value="<?= $belanja["nama"] ?>"
-                    required
-                />
-                <label for="nama" class="label-input">
-                    Nama Pembeli
-                </label>
-            </div>
-
-            <br>
-
-            <div class="form-control">
-                <input
-                    type="text"
-                    id="alamat"
-                    name="alamat"
-                    class="text-input input-info"
-                    autocomplete="off"
-                    placeholder="alamat"
-                    value="<?= $belanja["alamat"] ?>"
-                    required
-                />
-                <label for="alamat" class="label-input">
-                    Alamat
-                </label>
-            </div>
 
             <br>
 
@@ -147,6 +84,7 @@ if(isset($_POST["submit"])) {
                     placeholder="merk"
                     value="<?= $belanja["merk"] ?>"
                     required
+                    readonly
                 />
                 <label for="merk" class="label-input">
                     Merk Drone
@@ -164,9 +102,8 @@ if(isset($_POST["submit"])) {
                     autocomplete="off"
                     placeholder="jumlah"
                     required
-                    value="<?= $belanja["jumlah"] ?>"
-                    min ="1"
-
+                    value="<?= htmlspecialchars($belanja['jumlah']); ?>"
+                    min="1"
                 />
                 <label for="jumlah" class="label-input">
                     Jumlah
@@ -175,27 +112,30 @@ if(isset($_POST["submit"])) {
 
             <br>
 
-            <select required class="select select-neu"  id="paket" name="paket" >
-                <option name="paket" value="Basic" <?php if($belanja["paket"] == "Basic") echo "selected" ?> selected>Basic</option>
-                <option name="paket" value="Combo" <?php if($belanja["paket"] == "Combo") echo "selected" ?>>Combo</option>
-                <option name="paket" value="Air Craft Only" <?php if($belanja["paket"] == "Air Craft Only") echo "selected" ?>>Air Craft Only</option>
-            </select>
-        
-            <br>
-
-            <div class="input-field" style="border: 1px solid rgba(0, 0, 0, 0.6); border-radius: 9px; padding: 7px 10px; font-size:16px">
-            <label for="foto" class="label-field">Foto</label>
-            <input type="file" name="foto" id="foto">
-            <br>
-            <img src="imgBelanja/<?= $belanja['foto'] ?>" alt="<?= $belanja['foto'] ?>" width="80px" height="100px">
+            <div class="form-control">
+                <input
+                    type="textr"
+                    id="harga"
+                    name="harga"
+                    class="text-input input-info"
+                    autocomplete="off"
+                    placeholder="Harga"
+                    required
+                    value="<?= "Rp " . number_format($belanja["harga"], 0, ",", ".") ?>"
+                    min="1"
+                    readonly
+                />
+                <label for="harga" class="label-input">
+                    Harga
+                </label>
             </div>
 
             <br>
 
-            <button type ="submit" name="submit" class="btn btn-outline">KONFIRMASI</button>
+            <button type="submit" name="submit" class="btn btn-outline">KONFIRMASI</button>
         </form>
     </div>
-    </div>
-    <script src="script/script.js"></script>
+</div>
+<script src="script/script.js"></script>
 </body>
 </html>
