@@ -31,7 +31,7 @@ if (isset($_POST["submit"])) {
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['password'] = $user['password'];
                 $_SESSION['role'] = 'user'; // session untuk user
-                // dari farrel: tambahkan session yang menyimpan id_user
+                $_SESSION["id_user"] = $user["id_user"]; // Pastikan $user["id_user"] adalah ID pengguna yang benar
                 echo "
                 <script>
                 alert('Login berhasil! Selamat datang.');

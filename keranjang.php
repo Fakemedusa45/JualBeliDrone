@@ -1,12 +1,19 @@
 <?php 
     session_start();
-    if ($_SESSION['role'] != 'user'){
+    if ($_SESSION['role'] != 'user') {
         header('location: index.php');
         exit();
     }
 
     require "koneksi.php";
-    $sql = mysqli_query($conn, "SELECT * FROM belanja");
+    $user_id = $_SESSION['id_user'];  // Pastikan id_user tersimpan di session saat login
+
+    // Hanya mengambil item yang dimiliki oleh pengguna yang sedang login
+    $sql = mysqli_query($conn, "SELECT belanja.*, etalase.merk, etalase.harga 
+                            FROM belanja 
+                            JOIN etalase ON belanja.id_produk = etalase.id_etalase
+                            WHERE belanja.id_user = '$user_id'");
+
 
     $belanja = [];
 
@@ -14,6 +21,7 @@
         $belanja[] = $row;
     }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,20 +62,23 @@
                             <th>NO</th>
                             <th>Merk</th>
                             <th>Jumlah</th>
-                            <th>Paket</th>
+                            <th>Harga</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i =1; foreach($belanja as $belanja) : ?>
+                        <?php $i = 1; foreach ($belanja as $item) : ?>
                         <tr>
                             <td><?= $i ?></td>
-                            <td><?= $belanja["merk"] ?></td>
-                            <td><?= $belanja["jumlah"] ?></td>
-                            <td><?= $belanja["paket"] ?></td>
-                            <td><a class="aksi" href="edit.php?id_produk=<?= $belanja['id_produk'] ?>">Ubah</a> | <a class="aksi" href="delete.php?id_produk=<?= $belanja['id_produk'] ?>" onclick="return confirm('Yakin ingin menghapus data?');">Hapus</a></td>
+                            <td><?= $item["merk"] ?></td>
+                            <td><?= $item["jumlah"] ?></td>
+                            <td><?= "Rp " . number_format($item["harga"], 0, ",", ".") ?></td>
+                            <td>
+                                <a class="aksi" href="edit.php?id_produk=<?= $item['id_produk'] ?>">Ubah</a> | 
+                                <a class="aksi" href="delete.php?id_produk=<?= $item['id_produk'] ?>" onclick="return confirm('Yakin ingin menghapus data?');">Hapus</a>
+                            </td>
                         </tr>
-                        <?php $i++; endforeach ?>
+                        <?php $i++; endforeach; ?>
                     </tbody>
                 </table>
                 <br>
