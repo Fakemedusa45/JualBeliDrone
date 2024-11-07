@@ -1,6 +1,6 @@
 <?php
  if ($_SESSION['role'] != 'user'){
-    header('location: index.php');
+    header('location: edit.php');
     exit();
 }
 require "koneksi.php";

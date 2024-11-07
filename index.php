@@ -70,6 +70,11 @@ while ($row = mysqli_fetch_assoc($sql)) {
           <p>
             <?= $etalase["desk"] ?>
           </p>
+          <form action="keranjang.php" method="post">
+              <input type="hidden" name="id_produk" value="<?= $etalase['id_etalase'] ?>">
+              <input type="hidden" name="jumlah" value="1">
+              <button type="submit" class="btn btn-add">Tambahkan ke Keranjang</button>
+          </form>
         </div>
         <?php
         $i++;

@@ -6,14 +6,29 @@
     }
 
     require "koneksi.php";
-    $user_id = $_SESSION['id_user'];  // Pastikan id_user tersimpan di session saat login
+    $user_id = $_SESSION['id_user'];
+
+    // Proses penambahan item ke keranjang
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_produk']) && isset($_POST['jumlah'])) {
+        $id_produk = $_POST['id_produk'];
+        $jumlah = $_POST['jumlah'];
+
+        // Cek apakah produk sudah ada di keranjang
+        $check_sql = mysqli_query($conn, "SELECT * FROM belanja WHERE id_user = '$user_id' AND id_produk = '$id_produk'");
+        if (mysqli_num_rows($check_sql) > 0) {
+            // Jika sudah ada, update jumlah
+            mysqli_query($conn, "UPDATE belanja SET jumlah = jumlah + $jumlah WHERE id_user = '$user_id' AND id_produk = '$id_produk'");
+        } else {
+            // Jika belum ada, insert ke tabel belanja
+            mysqli_query($conn, "INSERT INTO belanja (id_user, id_produk, jumlah) VALUES ('$user_id', '$id_produk', '$jumlah')");
+        }
+    }
 
     // Hanya mengambil item yang dimiliki oleh pengguna yang sedang login
     $sql = mysqli_query($conn, "SELECT belanja.*, etalase.merk, etalase.harga 
                             FROM belanja 
                             JOIN etalase ON belanja.id_produk = etalase.id_etalase
                             WHERE belanja.id_user = '$user_id'");
-
 
     $belanja = [];
 
