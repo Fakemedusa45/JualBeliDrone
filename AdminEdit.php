@@ -146,8 +146,7 @@ if(isset($_POST["submit"])) {
                     rows="10"
                     placeholder="Jelaskan Drone disini..."
                     class="textarea textarea-info"
-                    value="<?= $etalase["desk"] ?>"
-                ></textarea>
+                ><?= $etalase["desk"] ?></textarea>
                 <label for="message" class="label-input">
                     Jelaskan Drone disini...
                 </label>

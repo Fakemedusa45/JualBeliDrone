@@ -91,20 +91,23 @@
       <h2>DJI DRONE</h2>
       <div class="drone-display">
         <?php $i=1; foreach($etalase as $etalase) : ?>
-          <div class="drone-container" id ="drone-container">
-            <h3>
-              <?= $etalase["merk"] ?>
-            </h3>
-            <p>
-              <?= $etalase["desk"] ?>
-            </p>
-            <p>
-              <td><?= "Rp" . " " .  $etalase["harga"] ?></td>
-            </p>
+          <div class="drone-container" id="drone-container">
+          <h3>
+            <?= $etalase["merk"] ?>
+          </h3>
+          <img src="imgEtalase/<?= $etalase['gambar'] ?>" alt="<?= $etalase['merk'] ?>" class="drone-image">
+          <p>
+          <?= "Rp " . number_format($etalase["harga"], 0, ',', '.') ?>
+          </p>
+          <p>
+            <?= $etalase["desk"] ?>
+          </p>
         </div>
-        <?php $i++; endforeach ?>
-      </div>
-    </section>
+        <?php
+        $i++;
+        ?>
+      <?php endforeach ?>
+    </div>
         </div>
     <script src="script/script.js"></script>
 </body>
