@@ -58,3 +58,39 @@ logout.forEach(link => {
         }
     });
 });
+
+// Menambahkan fitur pencarian langsung
+document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.querySelector('.sbx-custom__input');
+    const droneDisplay = document.querySelector('.drone-display');
+
+    searchInput.addEventListener('input', function() {
+        const searchValue = searchInput.value;
+
+        if (searchValue.length > 0) {
+            fetch(`search.php?search=${searchValue}`)
+                .then(response => response.json())
+                .then(data => {
+                    droneDisplay.innerHTML = ''; // Clear previous results
+                    data.forEach(etalase => {
+                        droneDisplay.innerHTML += `
+                            <div class="drone-container" id="drone-container">
+                                <h3>${etalase.merk}</h3>
+                                <img src="imgEtalase/${etalase.gambar}" alt="${etalase.merk}" class="drone-image">
+                                <p>Rp ${etalase.harga.toLocaleString('id-ID')}</p>
+                                <p>${etalase.desk}</p>
+                                ${etalase.role === 'user' ? `
+                                    <form action="keranjang.php" method="post">
+                                        <input type="hidden" name="id_produk" value="${etalase.id_etalase}">
+                                        <input type="hidden" name="jumlah" value="1">
+                                        <button type="submit" class="btn btn-outline">Tambahkan ke Keranjang</button>
+                                    </form>` : ''}
+                            </div>
+                        `;
+                    });
+                });
+        } else {
+            droneDisplay.innerHTML = ''; // Clear results if input is empty
+        }
+    });
+});

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2024 at 03:45 AM
+-- Generation Time: Nov 07, 2024 at 01:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `dbdrone`
 --
+CREATE DATABASE IF NOT EXISTS `dbdrone` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `dbdrone`;
 
 -- --------------------------------------------------------
 
@@ -30,17 +32,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `belanja` (
   `id_produk` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL
+  `paket` varchar(100) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `merk` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `belanja`
---
-
-INSERT INTO `belanja` (`id_produk`, `jumlah`, `id_user`) VALUES
-(6, 2, 15),
-(5, 13, 15),
-(8, 2, 15);
 
 -- --------------------------------------------------------
 

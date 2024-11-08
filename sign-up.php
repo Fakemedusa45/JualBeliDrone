@@ -16,7 +16,7 @@ if(isset($_POST["submit"])) {
     $namaLengkap = $_POST["nama_lengkap"];
 
     // Cek apakah username sudah digunakan
-    $checkQuery = "SELECT * FROM user WHERE email = '$email'";
+    $checkQuery = "SELECT * FROM user WHERE email = '$email' or username = '$username'";
     $checkResult = mysqli_query($conn, $checkQuery);
     
     if (mysqli_num_rows($checkResult) > 0) {
@@ -24,7 +24,7 @@ if(isset($_POST["submit"])) {
         echo "
         <script>
             alert('Username sudah digunakan! Silakan gunakan username lain.');
-            document.location.href = 'registrasi.php';
+            document.location.href = 'index.php';
         </script>
         ";
     }
