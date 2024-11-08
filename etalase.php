@@ -45,8 +45,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/etalase.css">
+    <link rel="stylesheet" href="style/style.css">
 
     <style>
       *{
@@ -102,19 +102,16 @@
             <?= $etalase["desk"] ?>
           </p>
           <?php 
-          if (isset($_SESSION['role']) && $_SESSION['role'] != 'user') {
+          if (isset($_SESSION['role']) && $_SESSION['role'] == 'user') {
               echo '
               <form action="keranjang.php" method="post">
                   <input type="hidden" name="id_produk" value="' . $etalase['id_etalase'] . '">
                   <input type="hidden" name="jumlah" value="1">
-                  <button type="submit" class="btn btn-add">Tambahkan ke Keranjang</button>
+                  <button type="submit" class="btn btn-outline">Tambahkan ke Keranjang</button>
               </form>';
           }
           ?>
         </div>
-        <?php
-        $i++;
-        ?>
       <?php endforeach ?>
     </div>
         </div>

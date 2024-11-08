@@ -66,11 +66,12 @@ if (isset($_POST["submit"])) {
     </style>
 </head>
 <body style="background-image: url(img/background_dji_drone.jpg);">
+<?php require("navbar.php") ?> 
 <?php require("night.php") ?>    
 <div class="utama-banget">
     <div class="utama">
         <form class="kartu-belanja" action="" method="post" enctype="multipart/form-data">
-            <h2>PEMBELIAN</h2>
+            <h2>EDIT KERANJANG</h2>
 
             <br>
 

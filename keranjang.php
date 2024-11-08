@@ -22,6 +22,9 @@
             // Jika belum ada, insert ke tabel belanja
             mysqli_query($conn, "INSERT INTO belanja (id_user, id_produk, jumlah) VALUES ('$user_id', '$id_produk', '$jumlah')");
         }
+        // Redirect untuk menghindari pengulangan permintaan POST
+        header('Location: keranjang.php');
+        exit();
     }
 
     // Hanya mengambil item yang dimiliki oleh pengguna yang sedang login
@@ -31,12 +34,16 @@
                             WHERE belanja.id_user = '$user_id'");
 
     $belanja = [];
+    $total_harga = 0; // Inisialisasi total harga
 
     while ($row = mysqli_fetch_assoc($sql)) {
         $belanja[] = $row;
+        $total_harga += $row['harga'] * $row['jumlah']; // Hitung total harga
     }
-?>
 
+    // Simpan total harga ke sesi
+    $_SESSION['total_harga'] = $total_harga; // Menyimpan total harga ke sesi
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -97,8 +104,16 @@
                     </tbody>
                 </table>
                 <br>
+                <h2>Total Harga: <?= "Rp " . number_format($total_harga, 0, ",", ".") ?></h2>
                 <br>
-                <a href="checkout.php" class="btn btn-outline" id="konfirmasi-belanja">Checkout</a>
+                <br>
+                <?php
+                if ($total_harga > 0) {
+                    echo "
+                    <a href='checkout.php' class='btn btn-outline' id='konfirmasi-belanja'>Checkout</a>
+                    ";
+                }
+                ?>
             </div>
         </div>
     </div>

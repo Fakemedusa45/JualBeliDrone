@@ -2,6 +2,10 @@
 session_start();
 require "koneksi.php";
 
+if (isset($_SESSION['role'])) {
+  header('location: index.php');
+}
+
 if (isset($_POST["submit"])) {
     $identifier = $_POST["identifier"];
     $password = $_POST["password"];

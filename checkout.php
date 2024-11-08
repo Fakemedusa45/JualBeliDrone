@@ -6,6 +6,8 @@
     }
 
     require "koneksi.php"; 
+
+    $user_id = $_SESSION['id_user'];
   
     $email = $_SESSION['email']; 
     $query = "SELECT namaLengkap FROM user WHERE email = '$email'"; 
@@ -16,8 +18,34 @@
     } else {
         $user['namaLengkap'] = 'Nama Tidak Ditemukan';
     }
-?>
 
+    // Ambil total harga dari sesi
+    $total_harga = isset($_SESSION['total_harga']) ? $_SESSION['total_harga'] : 0; // Mengambil total harga dari sesi
+
+    // Proses penghapusan data jika form di-submit
+    if (isset($_POST['delete'])) {
+        $user_id = $_POST['user_id']; // Ambil user_id dari form
+        mysqli_query($conn, "DELETE FROM belanja WHERE id_user = '$user_id'");
+        echo "<script>alert('Checkout berhasil! Terimakasih telah berbelanja di rumahdrone');</script>";
+        echo "<script>document.location.href = 'index.php';</script>";
+    }
+
+    if (isset($_POST['submit'])) {
+        // Tampilkan konfirmasi dan redirect menggunakan JavaScript
+        echo "
+        <script>
+            const userConfirmation = confirm('Apakah anda yakin ingin checkout?');
+            if (userConfirmation) {
+                document.getElementById('deleteForm').submit();
+                alert('Checkout berhasil! Terimakasih telah berbelanja di rumah drone');
+                document.location.href = 'index.php';
+            } else {
+                alert('Checkout dibatalkan.');
+                document.location.href = 'keranjang.php'; 
+            }
+        </script>";
+    }
+?>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,9 +72,17 @@
 </head>
 
 <body>
+<?php require("navbar.php") ?>
 
     <div class="container">
-        <form action="">
+
+        <!-- Form untuk menghapus data -->
+        <form id="deleteForm" action="" method="post" style="display: none;">
+            <input type="hidden" name="delete" value="1">
+            <input type="hidden" name="user_id" value="<?= $user['id_user']; ?>"> <!-- Pastikan $user['id_user'] didefinisikan -->
+        </form>
+
+        <form action="" method="post">
             <div class="row">
                 <div class="column">
                     <h3 class="title">Data Diri</h3>
@@ -60,21 +96,21 @@
                     </div>
                     <div class="input-box">
                         <span>Alamat :</span>
-                        <input type="text" placeholder="Masukan alamat anda">
+                        <input type="text" placeholder="Masukan alamat anda" required>
                     </div>
                     <div class="input-box">
                         <span>Kota :</span>
-                        <input type="text" placeholder="masukan kota anda">
+                        <input type="text" placeholder="masukan kota anda" required>
                     </div>
 
                     <div class="flex">
                         <div class="input-box">
                             <span>Negara :</span>
-                            <input type="text" placeholder="">
+                            <input type="text" placeholder="" required>
                         </div>
                         <div class="input-box">
-                            <span>Jumlah :</span>
-                            <input type="number" placeholder="" min="1">
+                            <span>Total Harga :</span>
+                            <input type="text" value="<?= "Rp " . number_format($total_harga, 0, ",", ".") ?>" readonly>
                         </div>
                     </div>
                 </div>
@@ -87,31 +123,31 @@
                     </div>
                     <div class="input-box">
                         <span>Nama pada kartu :</span>
-                        <input type="text" placeholder="">
+                        <input type="text" placeholder="" required>
                     </div>
                     <div class="input-box">
                         <span>Nomor kartu kredit :</span>
-                        <input type="number" placeholder="1111 2222 3333 4444">
+                        <input type="number" placeholder="1111 2222 3333 4444" required>
                     </div>
                     <div class="input-box">
                         <span>Exp. Month :</span>
-                        <input type="text" placeholder="">
+                        <input type="text" placeholder="" required>
                     </div>
                 
                     <div class="flex">
                         <div class="input-box">
                             <span>Exp. Year :</span>
-                            <input type="number" placeholder="2025">
+                            <input type="number" placeholder="2027" required>
                         </div>
                         <div class="input-box">
                             <span>CVV :</span>
-                            <input type="number" placeholder="123">
+                            <input type="number" placeholder="123" required>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" class="btn">Checkout</button>
+            <button type="submit" name="submit" class="btn">Checkout</button>
         </form>
     </div>
 

@@ -90,8 +90,11 @@ while ($row = mysqli_fetch_assoc($sql)) {
         ?>
       <?php endforeach ?>
     </div>
-    <a href="etalase.php">Lihat selengkapnya...</a>
   </section>
+
+  <div class="etalase">
+    <a href="etalase.php">Lihat selengkapnya...</a>
+  </div>
 
   <footer class="drone" id="about">
     <h2>ABOUT US</h2>

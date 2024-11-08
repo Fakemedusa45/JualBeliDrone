@@ -37,7 +37,7 @@ body {
     justify-content: space-between;
 }
 
-/* .form-control {
+.form-control {
   position: relative;
   }
   
@@ -102,7 +102,7 @@ body {
   
   .input-neu:focus {
   border-color: #183153;
-  } */
+  }
   
   .btn {
       display: flex;

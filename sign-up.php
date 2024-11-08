@@ -1,6 +1,12 @@
 <?php
 require "koneksi.php";
 
+session_start();
+
+if (isset($_SESSION['role'])) {
+    header('location: index.php');
+}
+
 if(isset($_POST["submit"])) {
     $username = $_POST["username"];
     $email = $_POST["email"];

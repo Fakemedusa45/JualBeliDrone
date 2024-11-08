@@ -40,6 +40,10 @@ body {
   color: #ffffff;
 }
 
+.dark-mode .kartu-belanja h2{
+  color: white;
+}
+
 .aksi{
     color: #000000;
 }

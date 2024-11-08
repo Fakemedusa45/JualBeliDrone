@@ -164,8 +164,8 @@ body{
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding-bottom: 300px;
-    padding-top: 30px;
+    padding-bottom: 100px;
+    padding-top: 85px;
   }
   
   .drone h2 {
@@ -585,4 +585,20 @@ body{
     object-fit: cover; 
     display: block;
     margin: auto;
+}
+
+.etalase {
+  align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.etalase a {
+  font-size: 25px;
+  color: #000000;
+}
+
+.dark-mode .etalase a {
+  color: #ffffff;
 }
