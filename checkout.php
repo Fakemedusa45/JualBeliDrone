@@ -22,29 +22,19 @@
     // Ambil total harga dari sesi
     $total_harga = isset($_SESSION['total_harga']) ? $_SESSION['total_harga'] : 0; // Mengambil total harga dari sesi
 
-    // Proses penghapusan data jika form di-submit
-    if (isset($_POST['delete'])) {
-        $user_id = $_POST['user_id']; // Ambil user_id dari form
-        mysqli_query($conn, "DELETE FROM belanja WHERE id_user = '$user_id'");
-        echo "<script>alert('Checkout berhasil! Terimakasih telah berbelanja di rumahdrone');</script>";
-        echo "<script>document.location.href = 'index.php';</script>";
-    }
-
     if (isset($_POST['submit'])) {
         // Tampilkan konfirmasi dan redirect menggunakan JavaScript
         echo "
         <script>
-            const userConfirmation = confirm('Apakah anda yakin ingin checkout?');
-            if (userConfirmation) {
-                document.getElementById('deleteForm').submit();
-                alert('Checkout berhasil! Terimakasih telah berbelanja di rumah drone');
-                document.location.href = 'index.php';
+            if (confirm('Apakah anda yakin ingin checkout?')) {
+                document.location.href = 'hapusCheckout.php';
             } else {
                 alert('Checkout dibatalkan.');
                 document.location.href = 'keranjang.php'; 
             }
         </script>";
     }
+
 ?>
 <head>
     <meta charset="UTF-8">
@@ -75,12 +65,6 @@
 <?php require("navbar.php") ?>
 
     <div class="container">
-
-        <!-- Form untuk menghapus data -->
-        <form id="deleteForm" action="" method="post" style="display: none;">
-            <input type="hidden" name="delete" value="1">
-            <input type="hidden" name="user_id" value="<?= $user['id_user']; ?>"> <!-- Pastikan $user['id_user'] didefinisikan -->
-        </form>
 
         <form action="" method="post">
             <div class="row">
